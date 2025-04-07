@@ -1,71 +1,46 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drivetrain {
 
-    public DcMotor frontLeftDrive  = null;
-    public DcMotor frontRightDrive = null;
-    public DcMotor backLeftDrive = null;
-    public DcMotor backRightDrive = null;
+    DcMotor frontLeftDrive;
+    DcMotor frontRightDrive;
+    DcMotor backLeftDrive;
+    DcMotor backRightDrive;
 
-    public void drive(Gamepad gamepad1, Gamepad gamepad2) {
+    public Drivetrain(HardwareMap X) {
 
-        double strafe;
-        double drive;
-        double turn;
-        double max;
+        frontLeftDrive = X.get(DcMotor.class, "frontLeftDrive");
+        frontRightDrive = X.get(DcMotor.class, "frontRightDrive");
+        backLeftDrive = X.get(DcMotor.class, "backLeftDrive");
+        backRightDrive = X.get(DcMotor.class, "backRightDrive");
 
-        drive = -gamepad1.left_stick_y;
-        turn = gamepad1.right_stick_x;
-        strafe = gamepad1.left_stick_x;
+        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        // Combine drive and turn for blended motion.
-        double frontLeftPower = drive + strafe + turn;
-        double frontRightPower = drive - strafe - turn;
-        double backLeftPower = drive - strafe + turn;
-        double backRightPower = drive + strafe - turn;
+        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // Normalize the values so neither exceed +/- 1.0
-        max = Math.max(Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower)),
-                Math.max(Math.abs(backLeftPower), Math.abs(backRightPower)));
+        frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 
-        if (max > 1.0) {
-            frontLeftPower /= max;
-            frontRightPower /= max;
-            backLeftPower /= max;
-            backRightPower /= max;
-        }
+    public void setDrivePower(double fl, double fr, double bl, double br) {
 
-        if (gamepad1.left_bumper) {
-            // Scale down to half speed if the left bumper is held
-            frontLeftPower *= 0.5;
-            frontRightPower *= 0.5;
-            backLeftPower *= 0.5;
-            backRightPower *= 0.5;
-        } else if (gamepad2.right_bumper) {
-            // Scale down to one-third speed if the right bumper is held
-            frontLeftPower *= 0.33;
-            frontRightPower *= 0.33;
-            backLeftPower *= 0.33;
-            backRightPower *= 0.33;
-        }
-
-        /*
-        if (drive == 0 && turn == 0 && strafe == 0) {
-            frontLeftPower = 0;
-            frontRightPower = 0;
-            backLeftPower = 0;
-            backRightPower = 0;
-        }
-        */
-
-        frontLeftDrive.setPower(frontLeftPower);
-        frontRightDrive.setPower(frontRightPower);
-        backLeftDrive.setPower(backLeftPower);
-        backRightDrive.setPower(backRightPower);
+        frontLeftDrive.setPower(fl);
+        frontRightDrive.setPower(fr);
+        backLeftDrive.setPower(bl);
+        backRightDrive.setPower(br);
 
     }
+
 }
 

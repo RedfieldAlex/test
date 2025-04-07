@@ -3,13 +3,13 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-public class Lift_Sensor {
+public class LiftSensor {
 
-    public TouchSensor liftSensor = null;
-    public DcMotor leftLift = null;
-    public DcMotor rightLift = null;
+    TouchSensor liftSensor;
+    DcMotor leftLift;
+    DcMotor rightLift;
 
-    private void liftSensor() {
+    public void sensor() {
 
         if (liftSensor.isPressed()) {
             leftLift.setPower(0);
