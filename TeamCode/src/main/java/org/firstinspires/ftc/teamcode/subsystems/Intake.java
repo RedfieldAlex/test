@@ -7,10 +7,14 @@ public class Intake {
 
     Servo intake;
 
-    public Intake(HardwareMap X) {
+    public Intake(HardwareMap hardwareMap) {
 
-        intake = X.get(Servo.class, "Intake");
+        intake = hardwareMap.get(Servo.class, "Intake");
 
+    }
+
+    public double getIntakePosition() {
+        return intake.getPosition(); // <- Getter in action
     }
 
     public void intakeStop() {

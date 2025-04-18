@@ -3,13 +3,14 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+
 public class Arm {
 
     DcMotor arm;
 
-    public Arm(HardwareMap X) {
+    public Arm(HardwareMap hardwareMap) {
 
-        arm = X.get(DcMotor.class, "Arm");
+        arm = hardwareMap.get(DcMotor.class, "Arm");
 
         arm.setDirection(DcMotor.Direction.FORWARD);
 
@@ -17,9 +18,11 @@ public class Arm {
 
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        if (!arm.isBusy()) {
-            arm.setPower(0);
-        }
+    }
+
+    public int getArmCurrentPosition() {
+
+        return arm.getCurrentPosition();
 
     }
 
@@ -36,6 +39,14 @@ public class Arm {
         arm.setTargetPosition(2000);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setPower(1.0);
+
+    }
+
+    public void armBusyZeroPower() {
+
+        if (!arm.isBusy()) {
+            arm.setPower(0);
+        }
 
     }
 

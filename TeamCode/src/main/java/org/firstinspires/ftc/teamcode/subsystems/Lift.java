@@ -8,16 +8,31 @@ public class Lift {
     DcMotor leftLift;
     DcMotor rightLift;
 
-    public Lift(HardwareMap X) {
+    public Lift(HardwareMap hardwareMap) {
 
-        leftLift = X.get(DcMotor.class, "leftLift");
-        rightLift = X.get(DcMotor.class, "rightLift");
+        leftLift = hardwareMap.get(DcMotor.class, "leftLift");
+        rightLift = hardwareMap.get(DcMotor.class, "rightLift");
+
         leftLift.setDirection(DcMotor.Direction.FORWARD);
         rightLift.setDirection(DcMotor.Direction.REVERSE);
+
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         leftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+    }
+
+    public int getLeftLiftCurrentPosition() {
+
+        return leftLift.getCurrentPosition();
+
+    }
+
+    public int getRightLiftCurrentPosition() {
+
+        return rightLift.getCurrentPosition();
 
     }
 

@@ -2,35 +2,35 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.ControllerMapping;
-import org.firstinspires.ftc.teamcode.subsystems.LiftSensor;
+import org.firstinspires.ftc.teamcode.RobotContainer;
 
 @TeleOp (name = "Main_Teleop", group = "Robot")
 public class MainTeleop extends LinearOpMode {
 
-    ControllerMapping controllerMapping;
-    LiftSensor liftSensor;
+    RobotContainer robotContainer;
 
     @Override
     public void runOpMode() {
 
-        controllerMapping = new ControllerMapping(hardwareMap);
-        liftSensor = new LiftSensor();
+        robotContainer = new RobotContainer(hardwareMap);
 
         waitForStart();
 
         while (opModeInInit()) {
-            //Telemetry
+
+            robotContainer.updateTelemetry(telemetry);
+
         }
 
         while (opModeIsActive()) {
 
-            controllerMapping.armFunc(gamepad2);
-            controllerMapping.drivetrainFunc(gamepad1);
-            controllerMapping.intakeFunc(gamepad2);
-            controllerMapping.liftFunc(gamepad2);
+            robotContainer.updateTelemetry(telemetry);
+            robotContainer.liftSensorFunc();
 
-            liftSensor.sensor();
+            robotContainer.armFunc(gamepad2);
+            robotContainer.drivetrainFunc(gamepad1);
+            robotContainer.intakeFunc(gamepad2);
+            robotContainer.liftFunc(gamepad2);
 
         }
 

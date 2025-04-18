@@ -1,25 +1,42 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.subsystems.LiftSensor;
+
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class ControllerMapping {
+public class RobotContainer {
 
     Arm arm;
     Drivetrain drivetrain;
     Intake intake;
     Lift lift;
+    LiftSensor liftSensor;
 
-    public ControllerMapping(HardwareMap X) {
+    public RobotContainer(HardwareMap hardwareMap) {
 
-        arm = new Arm(X);
-        drivetrain = new Drivetrain(X);
-        intake = new Intake(X);
-        lift = new Lift(X);
+        arm = new Arm(hardwareMap);
+        drivetrain = new Drivetrain(hardwareMap);
+        intake = new Intake(hardwareMap);
+        lift = new Lift(hardwareMap);
+        liftSensor = new LiftSensor(hardwareMap);
+
+    }
+
+    public void updateTelemetry(Telemetry telemetry) {
+
+        telemetry.addData("Arm Pos", arm.getArmCurrentPosition());
+        telemetry.addData("Intake Pos", intake.getIntakePosition());
+        telemetry.addData("Left Lift Pos", lift.getLeftLiftCurrentPosition());
+        telemetry.addData("Right Lift Pos", lift.getRightLiftCurrentPosition());
+        telemetry.addData("Lift Sensor", liftSensor.isLiftSensorPressed());
+
+        telemetry.update();
 
     }
 
@@ -29,8 +46,12 @@ public class ControllerMapping {
             arm.armPos1000(); // x maps to arm pos 1000
         }
 
-        if (gamepad2.y) {
+        else if (gamepad2.y) {
             arm.armPos2000(); // y maps to arm pos 2000
+        }
+
+        else {
+            arm.armBusyZeroPower();
         }
 
     }
@@ -113,6 +134,12 @@ public class ControllerMapping {
         else if (gamepad2.dpad_down) {
             lift.liftPos0(); // dpad down maps to lift pos 0
         }
+
+    }
+
+    public void liftSensorFunc() {
+
+        liftSensor.sensor();
 
     }
 

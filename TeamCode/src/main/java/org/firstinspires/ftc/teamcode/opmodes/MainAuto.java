@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.RobotContainer;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -17,25 +19,28 @@ public class MainAuto extends LinearOpMode {
     Lift lift;
     LiftSensor liftSensor;
 
+    RobotContainer robotContainer;
+
     @Override
     public void runOpMode() {
 
-        arm = new Arm(hardwareMap);
-        drivetrain = new Drivetrain(hardwareMap);
-        intake = new Intake(hardwareMap);
-        lift = new Lift(hardwareMap);
+        robotContainer = new RobotContainer(hardwareMap);
 
         waitForStart();
 
         while (opModeInInit()) {
-            //Telemetry
-        }
 
+            robotContainer.updateTelemetry(telemetry);
+
+        }
 
         if (opModeIsActive()) {
 
-            liftSensor.sensor();
+            robotContainer.updateTelemetry(telemetry);
+            robotContainer.liftSensorFunc();
+
             arm.armPos1000();
+            lift.liftPos5000();
             intake.intakeRelease();
             sleep(2000);
             intake.intakeStop();

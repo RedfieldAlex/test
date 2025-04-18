@@ -10,12 +10,12 @@ public class Drivetrain {
     DcMotor backLeftDrive;
     DcMotor backRightDrive;
 
-    public Drivetrain(HardwareMap X) {
+    public Drivetrain(HardwareMap hardwareMap) {
 
-        frontLeftDrive = X.get(DcMotor.class, "frontLeftDrive");
-        frontRightDrive = X.get(DcMotor.class, "frontRightDrive");
-        backLeftDrive = X.get(DcMotor.class, "backLeftDrive");
-        backRightDrive = X.get(DcMotor.class, "backRightDrive");
+        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
 
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -31,6 +31,7 @@ public class Drivetrain {
         frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
     }
 
     public void setDrivePower(double fl, double fr, double bl, double br) {
