@@ -26,13 +26,13 @@ public class MainAuto extends LinearOpMode {
 
         robotContainer = new RobotContainer(hardwareMap);
 
-        waitForStart();
-
         while (opModeInInit()) {
 
             robotContainer.updateTelemetry(telemetry);
 
         }
+
+        waitForStart();
 
         if (opModeIsActive()) {
 

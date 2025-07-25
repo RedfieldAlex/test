@@ -14,13 +14,14 @@ public class MainTeleop extends LinearOpMode {
 
         robotContainer = new RobotContainer(hardwareMap);
 
-        waitForStart();
 
         while (opModeInInit()) {
 
             robotContainer.updateTelemetry(telemetry);
 
         }
+
+        waitForStart();
 
         while (opModeIsActive()) {
 
@@ -36,4 +37,5 @@ public class MainTeleop extends LinearOpMode {
 
     }
 
+    //eee this is a test
 }
